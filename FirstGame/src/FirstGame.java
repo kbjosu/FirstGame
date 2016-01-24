@@ -14,14 +14,28 @@ public class FirstGame {
         boolean gameOver = false;
 
         while (gameOver == false) {
-            System.out.println("Vehicle 1 is at " + vehicle1.x + ", "
-                    + vehicle1.y + ". Vehicle 2 is at " + vehicle2.x + ", "
-                    + vehicle2.y + ".");
+            /**
+             * System.out.println("Vehicle 1 is at " + vehicle1.x + ", " +
+             * vehicle1.y + ". Vehicle 2 is at " + vehicle2.x + ", " +
+             * vehicle2.y + ".");
+             */
 
             move(vehicle1);
             move(vehicle2);
 
-            Thread.sleep(500);
+            if (inRange(vehicle1, base2)) {
+                System.out.println("Shoot v1, b2");
+                base2.health -= vehicle1.gunDamage;
+                System.out.println("Base 2 health = " + base2.health);
+            }
+            if (inRange(vehicle2, base1)) {
+                System.out.println("Shoot v2, b1");
+                base1.health -= vehicle2.gunDamage;
+                System.out.println("Base 1 health = " + base1.health);
+            }
+            gameOver = (base1.health <= 0) || (base2.health <= 0);
+
+            //Thread.sleep(500);
         }
     }
 
@@ -32,6 +46,12 @@ public class FirstGame {
         vehicle.y = ((int) (vehicle.y
                 + vehicle.speed * Math.cos(vehicle.heading)) + MAP_HEIGHT)
                 % MAP_HEIGHT;
+    }
+
+    static boolean inRange(Vehicle v, Base b) {
+        double distance = Math
+                .sqrt(Math.pow(v.x - b.x, 2) + Math.pow(v.y - b.y, 2));
+        return (distance < v.gunRange);
     }
 
 }
