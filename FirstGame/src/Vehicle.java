@@ -7,11 +7,14 @@ public class Vehicle {
     int gunRange = 500;
     int gunDamage = 50;
     int health = 100;
+    int x, y;
 
-    Vehicle(Base startingOwner) {
-        this.owner = startingOwner;
+    Vehicle(Base startingBase) {
+        this.owner = startingBase;
         Random rnd = new Random();
-        this.heading = rnd.nextDouble();
+        this.heading = rnd.nextDouble() * 2 * Math.PI;
+        this.x = startingBase.x;
+        this.y = startingBase.y;
 
     }
 
