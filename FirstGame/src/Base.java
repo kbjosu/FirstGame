@@ -7,4 +7,13 @@ public class Base {
         this.x = startingX;
         this.y = startingY;
     }
+
+    public String getName() {
+        if (this.x == 2500) {
+            return ("1");
+        } else {
+            return ("2");
+        }
+
+    }
 }
