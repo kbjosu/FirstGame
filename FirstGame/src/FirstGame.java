@@ -15,7 +15,7 @@ public class FirstGame {
         }
 
         boolean gameOver = false;
-
+        Base winner = null;
         while (gameOver == false) {
             /*
              * System.out.println("Vehicle 1 is at " + vehicle1.x + ", " +
@@ -23,22 +23,28 @@ public class FirstGame {
              * vehicle2.y + ".");
              */
 
-            for (int i = 0; i < MAX_VEHICLES; i++) {
+            for (int i = 0; i < MAX_VEHICLES && gameOver == false; i++) {
                 move(vehicle[i]);
                 Base target = inRange(vehicle[i]);
-                if (target != null && vehicle[i].ammo > 0) {
+                if (target != null && vehicle[i].ammo > 0 && target.health > 0
+                        && gameOver == false) {
                     target.health -= vehicle[i].gunDamage;
                     System.out.println("Vehicle " + i + " hit base "
                             + vehicle[i].owner.getName() + ". Base "
                             + vehicle[i].owner.getName() + " now has "
                             + target.health + " health.");
                     vehicle[i].ammo--;
+                    gameOver = (base1.health <= 0) || (base2.health <= 0);
+                    if (target != null && target.health <= 0) {
+                        winner = (vehicle[i].owner.getName() == "1") ? base2
+                                : base1;
+                    }
                 }
             }
-            gameOver = (base1.health <= 0) || (base2.health <= 0);
 
-            Thread.sleep(5);
+            Thread.sleep(20);
         }
+        System.out.print("Base " + winner.getName() + " wins!");
     }
 
     static void move(Vehicle vehicle) {
