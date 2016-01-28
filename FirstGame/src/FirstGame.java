@@ -1,13 +1,18 @@
+import java.util.Scanner;
 
 public class FirstGame {
 
     static final int MAP_WIDTH = 10000, MAP_HEIGHT = 10000;
-    static final int MAX_VEHICLES = 20;
+
     static Base base1 = new Base(2500, 2500);
     static Base base2 = new Base(7500, 7500);
 
     public static void main(String[] args) throws InterruptedException {
 
+        System.out.print(
+                "How many total vehicles do you want? Enter an even number: ");
+        Scanner in = new Scanner(System.in);
+        final int MAX_VEHICLES = in.nextInt();
         Vehicle[] vehicle = new Vehicle[MAX_VEHICLES];
 
         for (int i = 0; i < MAX_VEHICLES; i++) {
@@ -45,6 +50,7 @@ public class FirstGame {
             Thread.sleep(20);
         }
         System.out.print("Base " + winner.getName() + " wins!");
+        in.close();
     }
 
     static void move(Vehicle vehicle) {

@@ -16,7 +16,6 @@ public class Vehicle {
         this.heading = rnd.nextDouble() * 2 * Math.PI;
         this.x = startingBase.x;
         this.y = startingBase.y;
-
     }
 
 }
