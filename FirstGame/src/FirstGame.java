@@ -16,7 +16,36 @@ public class FirstGame {
         Vehicle[] vehicle = new Vehicle[MAX_VEHICLES];
 
         for (int i = 0; i < MAX_VEHICLES; i++) {
-            vehicle[i] = new Vehicle((i % 2 == 0) ? base1 : base2);
+            vehicle[i] = new Vehicle();
+            System.out
+                    .println("Vehicle " + i + " has speed " + vehicle[i].speed);
+        }
+
+        int[] assignedBases = new int[MAX_VEHICLES];
+        for (int i = 0; i < MAX_VEHICLES; i++) {
+            if (i % 2 == 0) {
+                System.out.print(
+                        "Player 1 chose a vehicle by entering the vehicle number: ");
+                int choice = in.nextInt();
+                while (assignedBases[choice - 1] != 0) {
+                    System.out.print("Vehicle " + choice
+                            + " has already been chosen. Please chose another vehicle number: ");
+                    choice = in.nextInt();
+                }
+                vehicle[choice - 1].assignBase(base1);
+                assignedBases[choice - 1] = 1;
+            } else {
+                System.out.print(
+                        "Player 2 chose a vehicle by entering the vehicle number: ");
+                int choice = in.nextInt();
+                while (assignedBases[choice - 1] != 0) {
+                    System.out.print("Vehicle " + choice
+                            + " has already been chosen. Please chose another vehicle number: ");
+                    choice = in.nextInt();
+                }
+                vehicle[choice - 1].assignBase(base2);
+                assignedBases[choice - 1] = 2;
+            }
         }
 
         boolean gameOver = false;
