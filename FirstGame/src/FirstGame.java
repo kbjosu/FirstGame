@@ -18,7 +18,7 @@ public class FirstGame {
         for (int i = 0; i < MAX_VEHICLES; i++) {
             vehicle[i] = new Vehicle();
             System.out
-                    .println("Vehicle " + i + " has speed " + vehicle[i].speed);
+                    .println("Vehicle " + (i+1) + " has speed " + vehicle[i].speed);
         }
 
         int[] assignedBases = new int[MAX_VEHICLES];
