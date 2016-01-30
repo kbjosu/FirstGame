@@ -4,6 +4,7 @@ public class Vehicle {
     Base owner;
     double heading;
     int speed;
+    int radarRange = 500;
     int gunRange = 500;
     int gunDamage = 50;
     int health = 100;
