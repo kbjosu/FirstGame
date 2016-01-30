@@ -8,7 +8,7 @@ public class Game {
     int MAX_VEHICLES;
     boolean gameOver = false;
     Base winner = null;
-    Vehicle[] vehicle;
+    public Vehicle[] vehicle;
 
     void setup() {
 
@@ -44,34 +44,31 @@ public class Game {
     }
 
     void process() {
-        while (this.gameOver == false) {
-            /*
-             * System.out.println("Vehicle 1 is at " + vehicle1.x + ", " +
-             * vehicle1.y + ". Vehicle 2 is at " + vehicle2.x + ", " +
-             * vehicle2.y + ".");
-             */
+        /*
+         * System.out.println("Vehicle 1 is at " + vehicle1.x + ", " +
+         * vehicle1.y + ". Vehicle 2 is at " + vehicle2.x + ", " + vehicle2.y +
+         * ".");
+         */
 
-            for (int i = 0; i < this.MAX_VEHICLES
-                    && this.gameOver == false; i++) {
-                this.move(this.vehicle[i]);
-                Base target = this.inRange(this.vehicle[i]);
-                if (target != null && this.vehicle[i].ammo > 0
-                        && target.health > 0 && this.gameOver == false) {
-                    target.health -= this.vehicle[i].gunDamage;
-                    System.out.println("Vehicle " + (i + 1) + " hit base "
-                            + target.getName() + ". Base " + target.getName()
-                            + " now has " + target.health + " health.");
-                    this.vehicle[i].ammo--;
-                    this.gameOver = (this.base1.health <= 0)
-                            || (this.base2.health <= 0);
-                    if (target != null && target.health <= 0) {
-                        this.winner = (this.vehicle[i].owner.getName() == "1")
-                                ? this.base2 : this.base1;
-                    }
+        for (int i = 0; i < this.MAX_VEHICLES && this.gameOver == false; i++) {
+            this.move(this.vehicle[i]);
+            Base target = this.inRange(this.vehicle[i]);
+            if (target != null && this.vehicle[i].ammo > 0 && target.health > 0
+                    && this.gameOver == false) {
+                target.health -= this.vehicle[i].gunDamage;
+                System.out.println("Vehicle " + (i + 1) + " hit base "
+                        + target.getName() + ". Base " + target.getName()
+                        + " now has " + target.health + " health.");
+                this.vehicle[i].ammo--;
+                this.gameOver = (this.base1.health <= 0)
+                        || (this.base2.health <= 0);
+                if (target != null && target.health <= 0) {
+                    this.winner = (this.vehicle[i].owner.getName() == "1")
+                            ? this.base2 : this.base1;
+
                 }
             }
         }
-        System.out.print("Base " + this.winner.getName() + " wins!");
     }
 
     void move(Vehicle vehicle) {
@@ -79,7 +76,7 @@ public class Game {
                 + vehicle.speed * Math.cos(vehicle.heading)) + this.MAP_WIDTH)
                 % this.MAP_WIDTH;
         vehicle.y = ((int) (vehicle.y
-                + vehicle.speed * Math.cos(vehicle.heading)) + this.MAP_HEIGHT)
+                + vehicle.speed * Math.sin(vehicle.heading)) + this.MAP_HEIGHT)
                 % this.MAP_HEIGHT;
     }
 
