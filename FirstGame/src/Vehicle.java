@@ -9,8 +9,10 @@ public class Vehicle {
     int health = 100;
     int x, y;
     int ammo = 3;
+    Game game;
 
-    Vehicle() {
+    Vehicle(Game g) {
+        this.game = FirstGame.game;
         Random rnd = new Random();
         this.heading = rnd.nextDouble() * 2 * Math.PI;
         this.speed = (int) (rnd.nextDouble() * 50) + 25;
@@ -22,4 +24,11 @@ public class Vehicle {
         this.y = this.owner.y;
     }
 
+    void calculate() {
+        Base b = this.game.inRange(this);
+        if (b != null) {
+            this.game.shootAt(this, b);
+
+        }
+    }
 }

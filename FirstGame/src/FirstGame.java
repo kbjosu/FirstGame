@@ -8,11 +8,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class FirstGame extends Application {
-    static Game game;
+    public static Game game;
 
     public static void main(String[] args) throws InterruptedException {
         game = new Game();
-        game.setup();
+        game.setup(game);
         launch(args);
 
     }
