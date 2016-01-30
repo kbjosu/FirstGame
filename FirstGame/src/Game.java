@@ -26,9 +26,13 @@ public class Game {
 
     void process() {
         for (int i = 0; i < this.MAX_VEHICLES && this.gameOver == false; i++) {
-            this.vehicle[i].calculate();
-            this.move(this.vehicle[i]);
-
+        	
+        	Vehicle v = this.vehicle[i];
+        	if (v.health > 0) {
+	            v.calculate();
+	            this.move(v);
+        	}
+        	
             this.gameOver = (this.base1.health <= 0)
                     || (this.base2.health <= 0);
         }
@@ -49,6 +53,25 @@ public class Game {
                 .sqrt(Math.pow(v.x - b.x, 2) + Math.pow(v.y - b.y, 2));
         return ((distance < v.gunRange) ? b : null);
     }
+    
+    Vehicle nearestVehicle(Vehicle v) {
+    	
+    	Vehicle nearestVehicle = null;
+    	double nearestDistance = 999999;
+    	
+        for (int i = 0; i < this.MAX_VEHICLES; i++) {
+        	if (this.vehicle[i] != v && v.owner != this.vehicle[i].owner) {
+        		double d = Math
+                        .sqrt(Math.pow(v.x - this.vehicle[i].x, 2) + Math.pow(v.y - this.vehicle[i].y, 2));
+        		if (d < nearestDistance) {
+        			nearestVehicle = this.vehicle[i]; 
+        			nearestDistance = d;
+        		}
+        	}
+        }
+        
+        return (nearestDistance <= v.radarRange) ? nearestVehicle : null;
+    }
 
     void shootAt(Vehicle v, Base b) {
     	long currentTime = System.currentTimeMillis();
@@ -60,5 +83,16 @@ public class Game {
                     + b.getName() + " now has " + b.health + " health.");
             System.out.println("Base "+base1.name+": "+base1.health+" Base "+base2.name+": "+base2.health);
         }
+    }
+    
+    void shootAt(Vehicle source, Vehicle target) {
+    	long currentTime = System.currentTimeMillis();
+    	
+        if (target != null && target.health > 0 && this.gameOver == false && (currentTime - source.lastShot) > 1000) {
+        	source.lastShot = currentTime;
+        	target.health -= source.gunDamage;
+            System.out.println("Vehicle X hit vehicle Y");
+       }
+
     }
 }
