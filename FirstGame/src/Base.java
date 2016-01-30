@@ -2,18 +2,15 @@
 public class Base {
     int x, y;
     int health = 1000;
+    String name;
 
-    Base(int startingX, int startingY) {
+    Base(String n, int startingX, int startingY) {
+    	this.name = n;
         this.x = startingX;
         this.y = startingY;
     }
 
     public String getName() {
-        if (this.x == 2500) {
-            return ("1");
-        } else {
-            return ("2");
-        }
-
+       return this.name;
     }
 }

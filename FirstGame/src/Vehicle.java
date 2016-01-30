@@ -8,8 +8,8 @@ public class Vehicle {
     int gunDamage = 50;
     int health = 100;
     int x, y;
-    int ammo = 3;
     Game game;
+    long lastShot = 0;
 
     Vehicle(Game g) {
         this.game = FirstGame.game;
