@@ -1,55 +1,54 @@
-import java.util.Scanner;
+import java.util.Random;
 
 public class Game {
     final int MAP_WIDTH = 10000, MAP_HEIGHT = 10000;
-
-    Base base1 = new Base(2500, 2500);
-    Base base2 = new Base(7500, 7500);
-    int MAX_VEHICLES;
+    int MAX_VEHICLES = 6;
     boolean gameOver = false;
     Base winner = null;
-    public Vehicle[] vehicle;
+    public Vehicle[] vehicle = new Vehicle[this.MAX_VEHICLES];
+    Random rnd = new Random();
+    Base base1 = new Base((int) (this.rnd.nextDouble() * 10000),
+            (int) (this.rnd.nextDouble() * 10000));
+    Base base2 = new Base((int) (this.rnd.nextDouble() * 10000),
+            (int) (this.rnd.nextDouble() * 10000));
 
     void setup() {
-
-        System.out.print(
-                "How many total vehicles do you want? Enter an even number: ");
-        Scanner in = new Scanner(System.in);
-        this.MAX_VEHICLES = in.nextInt();
-        this.vehicle = new Vehicle[this.MAX_VEHICLES];
         for (int i = 0; i < this.MAX_VEHICLES; i++) {
-            this.vehicle[i] = new Vehicle();
-            System.out.println("Vehicle " + (i + 1) + " has speed "
-                    + this.vehicle[i].speed);
-        }
-
-        for (int i = 0; i < this.MAX_VEHICLES; i++) {
-            System.out.print("Player " + (i % 2 + 1)
-                    + " chose a vehicle by entering the vehicle number: ");
-            int choice = in.nextInt();
-
-            while (this.vehicle[choice - 1].owner != null) {
-                System.out.print("Vehicle " + choice
-                        + " has already been chosen. Please chose another vehicle number: ");
-                choice = in.nextInt();
-            }
-
             if (i % 2 == 0) {
-                this.vehicle[choice - 1].assignBase(this.base1);
+                this.vehicle[i] = new Brent();
+                this.vehicle[i].assignBase(this.base1);
             } else {
-                this.vehicle[choice - 1].assignBase(this.base2);
+                this.vehicle[i] = new Kyle();
+                this.vehicle[i].assignBase(this.base2);
             }
         }
-        in.close();
+
+        /*
+         * System.out.print(
+         * "How many total vehicles do you want? Enter an even number: ");
+         * Scanner in = new Scanner(System.in); this.MAX_VEHICLES =
+         * in.nextInt(); this.vehicle = new Vehicle[this.MAX_VEHICLES]; for (int
+         * i = 0; i < this.MAX_VEHICLES; i++) { this.vehicle[i] = new Vehicle();
+         * System.out.println("Vehicle " + (i + 1) + " has speed " +
+         * this.vehicle[i].speed); }
+         *
+         * for (int i = 0; i < this.MAX_VEHICLES; i++) { System.out.print(
+         * "Player " + (i % 2 + 1) +
+         * " chose a vehicle by entering the vehicle number: "); int choice =
+         * in.nextInt();
+         *
+         * while (this.vehicle[choice - 1].owner != null) { System.out.print(
+         * "Vehicle " + choice +
+         * " has already been chosen. Please chose another vehicle number: ");
+         * choice = in.nextInt(); }
+         *
+         * if (i % 2 == 0) { this.vehicle[choice - 1].assignBase(this.base1); }
+         * else { this.vehicle[choice - 1].assignBase(this.base2); } }
+         * in.close();
+         */
     }
 
     void process() {
-        /*
-         * System.out.println("Vehicle 1 is at " + vehicle1.x + ", " +
-         * vehicle1.y + ". Vehicle 2 is at " + vehicle2.x + ", " + vehicle2.y +
-         * ".");
-         */
-
         for (int i = 0; i < this.MAX_VEHICLES && this.gameOver == false; i++) {
             this.move(this.vehicle[i]);
             Base target = this.inRange(this.vehicle[i]);

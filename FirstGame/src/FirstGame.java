@@ -44,6 +44,10 @@ public class FirstGame extends Application {
 
     void drawEverything(GraphicsContext gc) {
         gc.clearRect(0, 0, 500, 500);
+        gc.setFill(new Color(.5, .5, 1.0, 1.0));
+        gc.fillOval((game.base1.x / 20) - 10, (game.base1.y / 20) - 10, 20, 20);
+        gc.setFill(new Color(1.0, 0, .5, 1.0));
+        gc.fillOval((game.base2.x / 20) - 10, (game.base2.y / 20) - 10, 20, 20);
 
         for (int i = 0; i < game.MAX_VEHICLES; i++) {
             if (game.vehicle[i].owner == game.base1) {
