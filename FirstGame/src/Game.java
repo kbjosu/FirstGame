@@ -2,14 +2,14 @@ import java.util.Random;
 
 public class Game {
     final int MAP_WIDTH = 10000, MAP_HEIGHT = 10000;
-    int MAX_VEHICLES = 6;
+    int MAX_VEHICLES = 20;
     boolean gameOver = false;
     Base winner = null;
     public Vehicle[] vehicle = new Vehicle[this.MAX_VEHICLES];
     Random rnd = new Random();
-    Base base1 = new Base((int) (this.rnd.nextDouble() * 10000),
+    Base base1 = new Base("Brent",(int) (this.rnd.nextDouble() * 10000),
             (int) (this.rnd.nextDouble() * 10000));
-    Base base2 = new Base((int) (this.rnd.nextDouble() * 10000),
+    Base base2 = new Base("Kyle",(int) (this.rnd.nextDouble() * 10000),
             (int) (this.rnd.nextDouble() * 10000));
 
     void setup(Game game) {
@@ -51,11 +51,14 @@ public class Game {
     }
 
     void shootAt(Vehicle v, Base b) {
-        if (b != null && v.ammo > 0 && b.health > 0 && this.gameOver == false) {
-            b.health -= v.gunDamage;
+    	long currentTime = System.currentTimeMillis();
+    	
+        if (b != null && b.health > 0 && this.gameOver == false && (currentTime - v.lastShot) > 1000) {
+            v.lastShot = currentTime;
+        	b.health -= v.gunDamage;
             System.out.println("Vehicle X hit base " + b.getName() + ". Base "
                     + b.getName() + " now has " + b.health + " health.");
-            v.ammo--;
+            System.out.println("Base "+base1.name+": "+base1.health+" Base "+base2.name+": "+base2.health);
         }
     }
 }
